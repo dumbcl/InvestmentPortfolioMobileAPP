@@ -10,37 +10,26 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.investmentportfolio.ui.theme.InvestmentPortfolioTheme
+import com.example.investmentportfolio.ui.common_elements.SuccessDialog
+import com.example.investmentportfolio.ui.enter_screen.elements.EnterForm
+import com.example.investmentportfolio.ui.enter_screen.elements.RegistrationForm
+import com.example.investmentportfolio.ui.enter_screen.elements.StartForm
+import com.example.investmentportfolio.ui.my_portfolios_screen.elements.CreatePortfolioDialog
+import com.example.investmentportfolio.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            InvestmentPortfolioTheme {
+            AppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    //modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    CreatePortfolioDialog()
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    InvestmentPortfolioTheme {
-        Greeting("Android")
     }
 }
