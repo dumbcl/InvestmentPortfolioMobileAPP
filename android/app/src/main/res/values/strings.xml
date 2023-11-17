@@ -16,4 +16,9 @@
     <string name="enter_portfolio_name">Введите название портфеля</string>
     <string name="save">Сохранить</string>
     <string name="cancel">Отменить</string>
+    <string name="buy">Купить</string>
+    <string name="sell">Продать</string>
+    <string name="name">Название</string>
+    <string name="number">Количество</string>
+    <string name="stock_price">Цена акции</string>
 </resources>

@@ -15,6 +15,7 @@ import com.example.investmentportfolio.ui.enter_screen.elements.EnterForm
 import com.example.investmentportfolio.ui.enter_screen.elements.RegistrationForm
 import com.example.investmentportfolio.ui.enter_screen.elements.StartForm
 import com.example.investmentportfolio.ui.my_portfolios_screen.elements.CreatePortfolioDialog
+import com.example.investmentportfolio.ui.my_portfolios_screen.elements.StockDialog
 import com.example.investmentportfolio.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,7 +28,7 @@ class MainActivity : ComponentActivity() {
                     //modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    CreatePortfolioDialog()
+                    StockDialog(true)
                 }
             }
         }
