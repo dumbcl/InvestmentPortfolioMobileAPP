@@ -7,8 +7,18 @@ import androidx.compose.ui.unit.sp
 object Typography {
 
     val largeTitle = TextStyle(
+        fontSize = 32.sp,
+        fontWeight = FontWeight.Bold
+    )
+
+    val largeBoldTitle = TextStyle(
         fontSize = 26.sp,
         fontWeight = FontWeight.Bold
+    )
+
+    val largeRegularTitle = TextStyle(
+        fontSize = 26.sp,
+        fontWeight = FontWeight.Medium
     )
 
     val bigTitle = TextStyle(

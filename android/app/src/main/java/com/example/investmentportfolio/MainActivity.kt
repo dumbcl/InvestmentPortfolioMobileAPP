@@ -14,8 +14,12 @@ import com.example.investmentportfolio.ui.common_elements.SuccessDialog
 import com.example.investmentportfolio.ui.enter_screen.elements.EnterForm
 import com.example.investmentportfolio.ui.enter_screen.elements.RegistrationForm
 import com.example.investmentportfolio.ui.enter_screen.elements.StartForm
+import com.example.investmentportfolio.ui.history_screen.elements.OperationsHistoryScreen
 import com.example.investmentportfolio.ui.my_portfolios_screen.elements.CreatePortfolioDialog
+import com.example.investmentportfolio.ui.my_portfolios_screen.elements.MyPortfoliosScreen
 import com.example.investmentportfolio.ui.my_portfolios_screen.elements.StockDialog
+import com.example.investmentportfolio.ui.portfolio_screen.elements.PortfolioScreen
+import com.example.investmentportfolio.ui.search_screen.elements.SearchStockScreen
 import com.example.investmentportfolio.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,10 +29,10 @@ class MainActivity : ComponentActivity() {
             AppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    //modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    StockDialog(true)
+                    SearchStockScreen()
                 }
             }
         }

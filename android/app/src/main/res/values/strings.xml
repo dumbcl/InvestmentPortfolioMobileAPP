@@ -21,4 +21,13 @@
     <string name="name">Название</string>
     <string name="number">Количество</string>
     <string name="stock_price">Цена акции</string>
+    <string name="sale">Продажа</string>
+    <string name="purchase">Покупка</string>
+    <string name="operations_history">История операций</string>
+    <string name="create_portfolio">Создать портфель</string>
+    <string name="invest">Инвестировать</string>
+    <string name="stocks">Акции</string>
+    <string name="currencies">Валюта</string>
+    <string name="search">Поиск</string>
+    <string name="search_stock">Поиск акции</string>
 </resources>
