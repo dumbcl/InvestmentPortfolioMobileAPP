@@ -28,10 +28,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.investmentportfolio.R
 import com.example.investmentportfolio.data.StockItem
 import com.example.investmentportfolio.ui.common_elements.BottomNavigationBar
+import com.example.investmentportfolio.ui.my_portfolios_screen.elements.StockDialog
 import com.example.investmentportfolio.ui.theme.AppTheme
 
 val mockedStocks = listOf(
@@ -39,6 +41,14 @@ val mockedStocks = listOf(
     StockItem("1", "Газпром", 1000, 10, 12),
     StockItem("1", "Газпром", 1000, 10, 12),
 )
+
+@Preview
+@Composable
+fun PreviewPortfolioScreen() {
+    AppTheme {
+        PortfolioScreen()
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

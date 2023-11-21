@@ -22,10 +22,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.investmentportfolio.R
 import com.example.investmentportfolio.ui.common_elements.BottomNavigationBar
 import com.example.investmentportfolio.ui.theme.AppTheme
+
+@Preview
+@Composable
+fun PreviewSearchStockScreen() {
+    AppTheme {
+        SearchStockScreen()
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -74,3 +83,4 @@ fun SearchStockScreen() {
         }
     )
 }
+

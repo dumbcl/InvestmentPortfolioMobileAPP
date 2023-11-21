@@ -29,9 +29,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.investmentportfolio.R
+import com.example.investmentportfolio.ui.common_elements.SuccessDialog
 import com.example.investmentportfolio.ui.theme.AppTheme
+
+@Preview
+@Composable
+fun PreviewEnterForm() {
+    AppTheme {
+        EnterForm()
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

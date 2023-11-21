@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.investmentportfolio.R
 import com.example.investmentportfolio.data.PortfolioItem
@@ -34,6 +35,14 @@ val mockedPortfolios = listOf(
     PortfolioItem("1", "Hello", "11 октября, 2023", 1223, 12),
     PortfolioItem("1", "Hello", "11 октября, 2023", 1223, 12)
 )
+
+@Preview
+@Composable
+fun PreviewMyPortfoliosScreen() {
+    AppTheme {
+        MyPortfoliosScreen()
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

@@ -20,10 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.investmentportfolio.R
 import com.example.investmentportfolio.data.OperationItem
 import com.example.investmentportfolio.ui.common_elements.BottomNavigationBar
+import com.example.investmentportfolio.ui.enter_screen.elements.RegistrationForm
 import com.example.investmentportfolio.ui.theme.AppTheme
 
 val mockedOperations = listOf(
@@ -35,6 +37,14 @@ val mockedOperations = listOf(
     OperationItem(true, "11 октября, 2023", 12), OperationItem(true, "11 октября, 2023", 1223),
     OperationItem(false, "11 октября, 2023", -1223),
 )
+
+@Preview
+@Composable
+fun PreviewOperationsHistoryScreen() {
+    AppTheme {
+        OperationsHistoryScreen()
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

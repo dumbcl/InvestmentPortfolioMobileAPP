@@ -25,9 +25,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.investmentportfolio.R
+import com.example.investmentportfolio.ui.history_screen.elements.OperationsHistoryScreen
 import com.example.investmentportfolio.ui.theme.AppTheme
+
+@Preview
+@Composable
+fun PreviewCreatePortfolioDialog() {
+    AppTheme {
+        CreatePortfolioDialog()
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
