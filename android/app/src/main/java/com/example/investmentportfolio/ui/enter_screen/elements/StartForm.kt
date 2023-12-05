@@ -30,7 +30,7 @@ fun PreviewStartForm() {
 @Composable
 fun StartForm() {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(color = AppTheme.colors.white),
         contentAlignment = Alignment.Center
     ){
         Column(

@@ -22,9 +22,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.investmentportfolio.R
 import com.example.investmentportfolio.data.OperationItem
 import com.example.investmentportfolio.ui.common_elements.BottomNavigationBar
+import com.example.investmentportfolio.ui.common_elements.NavigationItem
 import com.example.investmentportfolio.ui.enter_screen.elements.RegistrationForm
 import com.example.investmentportfolio.ui.theme.AppTheme
 
@@ -42,17 +44,17 @@ val mockedOperations = listOf(
 @Composable
 fun PreviewOperationsHistoryScreen() {
     AppTheme {
-        OperationsHistoryScreen()
+        OperationsHistoryScreen(NavController(LocalContext.current))
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun OperationsHistoryScreen() {
+fun OperationsHistoryScreen(navController: NavController) {
     val context = LocalContext.current
     Scaffold(
-        bottomBar = { BottomNavigationBar() },
+        bottomBar = { BottomNavigationBar(NavigationItem.History, navController) },
         content = {
             Column {
                 Text(

@@ -46,7 +46,7 @@ fun PreviewRegistrationForm() {
 @Composable
 fun RegistrationForm() {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(color = AppTheme.colors.white),
         contentAlignment = Alignment.Center
     ){
         val context = LocalContext.current

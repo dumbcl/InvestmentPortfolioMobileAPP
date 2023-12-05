@@ -2,6 +2,7 @@ package com.example.investmentportfolio.ui.my_portfolios_screen.elements
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,9 +26,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import com.example.investmentportfolio.R
 import com.example.investmentportfolio.data.PortfolioItem
 import com.example.investmentportfolio.ui.common_elements.BottomNavigationBar
+import com.example.investmentportfolio.ui.common_elements.BottomShadow
+import com.example.investmentportfolio.ui.common_elements.NavigationItem
+import com.example.investmentportfolio.ui.my_portfolios_screen.MyPortfoliosFragmentDirections
 import com.example.investmentportfolio.ui.theme.AppTheme
 
 val mockedPortfolios = listOf(
@@ -40,17 +46,17 @@ val mockedPortfolios = listOf(
 @Composable
 fun PreviewMyPortfoliosScreen() {
     AppTheme {
-        MyPortfoliosScreen()
+        MyPortfoliosScreen(NavController(LocalContext.current))
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MyPortfoliosScreen() {
+fun MyPortfoliosScreen(navController: NavController) {
     val context = LocalContext.current
     Scaffold(
-        bottomBar = { BottomNavigationBar() },
+        bottomBar = { BottomNavigationBar(NavigationItem.MyPortfolios, navController) },
         content = {
             Column {
                 Box(
@@ -65,6 +71,7 @@ fun MyPortfoliosScreen() {
                         style = AppTheme.typography.largeTitle,
                         modifier = Modifier
                             .align(Alignment.TopStart)
+                            .clickable { navController.navigate(MyPortfoliosFragmentDirections.actionMyPortfoliosFragmentToPortfolioFragment()) }
                     )
                     TextButton(
                         onClick = {},
@@ -97,65 +104,5 @@ fun MyPortfoliosScreen() {
                 }
             }
         }
-    )
-}
-
-@Composable
-fun PortfolioUIItem(name: String, creationDate: String, moneyNumber: Int, profitPercent: Int) {
-    Column {
-        Row(
-            modifier = Modifier
-                .padding(8.dp)
-        ) {
-            Column(
-                Modifier.width(230.dp)
-            ) {
-                Text(
-                    text = name,
-                    color = AppTheme.colors.mainBrown,
-                    style = AppTheme.typography.regularBoldText
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = creationDate,
-                    color = AppTheme.colors.mainPurple,
-                    style = AppTheme.typography.regularText
-                )
-            }
-            Spacer(modifier = Modifier.width(60.dp))
-            Column(
-                Modifier.width(130.dp)
-            ) {
-                Text(
-                    text = "$profitPercent %",
-                    color = AppTheme.colors.mainBrown,
-                    style = AppTheme.typography.regularBoldText
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = "$moneyNumber Р",
-                    color = AppTheme.colors.mainPurple,
-                    style = AppTheme.typography.regularBoldText
-                )
-            }
-        }
-        BottomShadow()
-    }
-}
-
-@Composable
-fun BottomShadow() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(25.dp)
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        AppTheme.colors.mainGreen.copy(alpha = 0.2f),
-                        Color.Transparent,
-                    )
-                )
-            )
     )
 }

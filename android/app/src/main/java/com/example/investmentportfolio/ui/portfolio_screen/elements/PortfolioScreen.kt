@@ -30,10 +30,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.investmentportfolio.R
 import com.example.investmentportfolio.data.StockItem
 import com.example.investmentportfolio.ui.common_elements.BottomNavigationBar
+import com.example.investmentportfolio.ui.common_elements.BottomShadow
+import com.example.investmentportfolio.ui.common_elements.NavigationItem
 import com.example.investmentportfolio.ui.my_portfolios_screen.elements.StockDialog
+import com.example.investmentportfolio.ui.portfolio_screen.PortfolioFragmentDirections
 import com.example.investmentportfolio.ui.theme.AppTheme
 
 val mockedStocks = listOf(
@@ -46,22 +50,22 @@ val mockedStocks = listOf(
 @Composable
 fun PreviewPortfolioScreen() {
     AppTheme {
-        PortfolioScreen()
+        PortfolioScreen(NavController(LocalContext.current))
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun PortfolioScreen() {
+fun PortfolioScreen(navController: NavController) {
     val context = LocalContext.current
     Scaffold(
-        bottomBar = { BottomNavigationBar() },
+        bottomBar = { BottomNavigationBar(NavigationItem.MyPortfolios, navController, fromAnotherFragment = true) },
         content = {
             Column {
                 Row {
                     IconButton(
-                        onClick = { /*TODO*/ },
+                        onClick = { navController.navigate(PortfolioFragmentDirections.actionPortfolioFragmentToMyPortfoliosFragment()) },
                     ) {
                         Icon(
                             Icons.Filled.ArrowBack,
@@ -199,65 +203,5 @@ fun PortfolioScreen() {
                 }
             }
         }
-    )
-}
-
-@Composable
-fun StockUIItem(name: String, price: Int, stockNumber: Int, profitPercent: Int) {
-    Column {
-        Row(
-            modifier = Modifier
-                .padding(10.dp)
-        ) {
-            Column(
-                Modifier.width(230.dp)
-            ) {
-                Text(
-                    text = name,
-                    color = AppTheme.colors.mainBrown,
-                    style = AppTheme.typography.regularBoldText
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = "$price Р",
-                    color = AppTheme.colors.mainPurple,
-                    style = AppTheme.typography.regularText
-                )
-            }
-            Spacer(modifier = Modifier.width(60.dp))
-            Column(
-                Modifier.width(130.dp)
-            ) {
-                Text(
-                    text = "$stockNumber акций",
-                    color = AppTheme.colors.mainBrown,
-                    style = AppTheme.typography.regularBoldText
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = "$profitPercent %",
-                    color = AppTheme.colors.mainPurple,
-                    style = AppTheme.typography.regularBoldText
-                )
-            }
-        }
-        BottomShadow()
-    }
-}
-
-@Composable
-fun BottomShadow() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(25.dp)
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        AppTheme.colors.mainGreen.copy(alpha = 0.2f),
-                        Color.Transparent,
-                    )
-                )
-            )
     )
 }

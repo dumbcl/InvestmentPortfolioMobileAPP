@@ -47,8 +47,8 @@ fun PreviewEnterForm() {
 @Composable
 fun EnterForm() {
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize().background(color = AppTheme.colors.white),
+        contentAlignment = Alignment.Center,
     ){
         val context = LocalContext.current
         IconButton(

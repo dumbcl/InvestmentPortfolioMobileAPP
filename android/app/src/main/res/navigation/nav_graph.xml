@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/searchStocksFragment">
+
+    <fragment
+        android:id="@+id/myPortfoliosFragment"
+        android:name="com.example.investmentportfolio.ui.my_portfolios_screen.MyPortfoliosFragment"
+        android:label="MyPortfoliosFragment" >
+        <action
+            android:id="@+id/action_myPortfoliosFragment_to_portfolioFragment"
+            app:destination="@id/portfolioFragment"
+            />
+        <action
+            android:id="@+id/action_myPortfoliosFragment_to_operationsHistoryFragment"
+            app:destination="@id/operationsHistoryFragment"
+            />
+        <action
+            android:id="@+id/action_myPortfoliosFragment_to_searchStocksFragment"
+            app:destination="@id/searchStocksFragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/enterFragment"
+        android:name="com.example.investmentportfolio.ui.enter_screen.EnterScreenFragment"
+        android:label="EnterFragment" >
+        <action
+            android:id="@+id/action_enterFragment_to_myPortfoliosFragment"
+            app:destination="@id/myPortfoliosFragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/operationsHistoryFragment"
+        android:name="com.example.investmentportfolio.ui.history_screen.OperationsHistoryFragment"
+        android:label="OperationsHistoryFragment" >
+        <action
+            android:id="@+id/action_operationsHistoryFragment_to_searchStocksFragment"
+            app:destination="@id/searchStocksFragment"
+            />
+        <action
+            android:id="@+id/action_operationsHistoryFragment_to_myPortfoliosFragment"
+            app:destination="@id/myPortfoliosFragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/portfolioFragment"
+        android:name="com.example.investmentportfolio.ui.portfolio_screen.PortfolioFragment"
+        android:label="portfolioFragment" >
+        <action
+            android:id="@+id/action_portfolioFragment_to_myPortfoliosFragment"
+            app:destination="@id/myPortfoliosFragment"
+            />
+        <action
+            android:id="@+id/action_portfolioFragment_to_searchStocksFragment"
+            app:destination="@id/searchStocksFragment"
+            />
+        <action
+            android:id="@+id/action_portfolioFragment_to_operationsHistoryFragment"
+            app:destination="@id/operationsHistoryFragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchStocksFragment"
+        android:name="com.example.investmentportfolio.ui.search_screen.SearchStocksFragment"
+        android:label="SearchStocksFragment" >
+        <action
+            android:id="@+id/action_searchStocksFragment_to_myPortfoliosFragment"
+            app:destination="@id/myPortfoliosFragment"
+            />
+        <action
+            android:id="@+id/action_searchStocksFragment_to_stockFragment"
+            app:destination="@id/stockFragment"
+            />
+        <action
+            android:id="@+id/action_searchStocksFragment_to_operationsHistoryFragment"
+            app:destination="@id/operationsHistoryFragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/stockFragment"
+        android:name="com.example.investmentportfolio.ui.stock_screen.StockFragment"
+        android:label="StockFragment" >
+        <action
+            android:id="@+id/action_stockFragment_to_searchStocksFragment"
+            app:destination="@id/searchStocksFragment"
+            />
+        <action
+            android:id="@+id/action_stockFragment_to_myPortfoliosFragment"
+            app:destination="@id/myPortfoliosFragment"
+            />
+        <action
+            android:id="@+id/action_stockFragment_to_operationsHistoryFragment"
+            app:destination="@id/operationsHistoryFragment"
+            />
+    </fragment>
+
+</navigation>
