@@ -1,3 +1,3 @@
 package com.example.investmentportfolio.data
 
-data class SearchStockItem(val id: String, val name: String, val price: Int, val country: String, val companyName: String)
+data class SearchStockItem(val id: Int, val name: String, val price: List<Float>, val country: String, val companyName: String)

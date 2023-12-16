@@ -5,28 +5,22 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -34,16 +28,23 @@ import androidx.navigation.NavController
 import com.example.investmentportfolio.ui.common_elements.BottomNavigationBar
 import com.example.investmentportfolio.ui.common_elements.NavigationItem
 import com.example.investmentportfolio.ui.stock_screen.StockFragmentDirections
+import com.example.investmentportfolio.ui.stock_screen.StockScreenState
 import com.example.investmentportfolio.ui.theme.AppTheme
-import com.example.investmentportfolio.ui.theme.Palette
+import java.lang.Math.abs
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun StockScreen(navController: NavController){
+fun StockScreen(uiState: StockScreenState, navController: NavController) {
     val context = LocalContext.current
     Scaffold(
-        bottomBar = { BottomNavigationBar(NavigationItem.Search, navController, fromAnotherFragment = true) },
+        bottomBar = {
+            BottomNavigationBar(
+                NavigationItem.Search,
+                navController,
+                fromAnotherFragment = true
+            )
+        },
         content = {
             Column {
                 Row {
@@ -59,36 +60,34 @@ fun StockScreen(navController: NavController){
                                 .height(24.dp),
                         )
                     }
-                    Spacer(modifier = Modifier.width(80.dp))
-                    Text(
-                        text = "Газпром",
-                        color = AppTheme.colors.mainGreen,
-                        style = AppTheme.typography.someTitle,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(0.dp, 10.dp),
-                    )
                 }
                 Spacer(modifier = Modifier.height(22.dp))
                 Text(
-                    text = "Мой портфель",
+                    text = uiState.stock.name,
                     color = AppTheme.colors.mainGrey,
                     style = AppTheme.typography.bigTitle,
                     modifier = Modifier.padding(10.dp, 0.dp)
                 )
                 Spacer(modifier = Modifier.height(11.dp))
+
+                val prices = uiState.stock.price
+                val profit = prices.last() - prices[prices.size - 2]
+                val profitPercent = kotlin.math.abs(profit) / prices.last() * 100
+
+
                 Row(
                     modifier = Modifier
                         .padding(10.dp, 0.dp)
                         .fillMaxWidth()
                 ) {
                     Text(
-                        text = "7000",
+                        text = uiState.stock.price.last().toString(),
                         color = AppTheme.colors.mainGreen,
                         style = AppTheme.typography.largeBoldTitle,
-                        modifier = Modifier.weight(3f)
+                        modifier = Modifier.weight(2f)
                     )
                     Text(
-                        text = "+200",
+                        text = if (profit > 0) "+$profit" else "$profit",
                         color = AppTheme.colors.supportGrey,
                         style = AppTheme.typography.mediumTitle,
                         modifier = Modifier
@@ -96,7 +95,7 @@ fun StockScreen(navController: NavController){
                             .weight(1f)
                     )
                     Text(
-                        text = "(0.1%)",
+                        text = if (profit > 0) "($profitPercent%)" else "(-$profitPercent%)",
                         color = AppTheme.colors.mainGreen,
                         style = AppTheme.typography.mediumTitle,
                         modifier = Modifier
@@ -105,7 +104,7 @@ fun StockScreen(navController: NavController){
                     )
                 }
                 Spacer(modifier = Modifier.height(40.dp))
-                PriceChart()
+                PriceChart(prices)
                 Spacer(modifier = Modifier.height(30.dp))
                 Text(
                     text = "Описание",
@@ -120,7 +119,9 @@ fun StockScreen(navController: NavController){
                         .padding(16.dp, 0.dp)
                         .fillMaxWidth()
                 ) {
-                    Column(){
+                    Column(
+                        modifier = Modifier.weight(1f)
+                    ){
                         Text(
                             text = "Стоимость",
                             color = AppTheme.colors.supportGrey,
@@ -128,21 +129,22 @@ fun StockScreen(navController: NavController){
                         )
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
-                            text = "71.42 Р",
+                            text = prices.last().toString(),
                             color = AppTheme.colors.mainGreen,
                             style = AppTheme.typography.regularText,
                         )
                     }
-                    Spacer(modifier = Modifier.width(60.dp))
-                    Column(){
+                    Column(
+                        modifier = Modifier.weight(1f)
+                    ){
                         Text(
-                            text = "Стоимость",
+                            text = "Изменение за день",
                             color = AppTheme.colors.supportGrey,
                             style = AppTheme.typography.regularText,
                         )
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
-                            text = "71.42 Р",
+                            text = if (profit > 0) "+$profit" else "$profit",
                             color = AppTheme.colors.mainGreen,
                             style = AppTheme.typography.regularText,
                         )
@@ -154,29 +156,32 @@ fun StockScreen(navController: NavController){
                         .padding(16.dp, 0.dp)
                         .fillMaxWidth()
                 ){
-                    Column(){
+                    Column(
+                        modifier = Modifier.weight(1f)
+                    ){
                         Text(
-                            text = "Стоимость",
+                            text = "Страна",
                             color = AppTheme.colors.supportGrey,
                             style = AppTheme.typography.regularText,
                         )
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
-                            text = "71.42 Р",
+                            text = uiState.stock.country,
                             color = AppTheme.colors.mainGreen,
                             style = AppTheme.typography.regularText,
                         )
                     }
-                    Spacer(modifier = Modifier.width(60.dp))
-                    Column(){
+                    Column(
+                        modifier = Modifier.weight(1f)
+                    ){
                         Text(
-                            text = "Стоимость",
+                            text = "Компания",
                             color = AppTheme.colors.supportGrey,
                             style = AppTheme.typography.regularText,
                         )
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
-                            text = "71.42 Р",
+                            text = uiState.stock.companyName,
                             color = AppTheme.colors.mainGreen,
                             style = AppTheme.typography.regularText,
                         )
@@ -189,10 +194,12 @@ fun StockScreen(navController: NavController){
 
 
 @Composable
-fun PriceChart() {
-    val data = listOf(25f, 45f, 32f, 50f, 23f)
+fun PriceChart(data : List<Float>) {
 
-    Canvas(modifier = Modifier.width(300.dp).height(150.dp).padding(20.dp, 0.dp), onDraw = {
+    Canvas(modifier = Modifier
+        .width(300.dp)
+        .height(150.dp)
+        .padding(20.dp, 0.dp), onDraw = {
         drawLineChart(data)
     })
 }

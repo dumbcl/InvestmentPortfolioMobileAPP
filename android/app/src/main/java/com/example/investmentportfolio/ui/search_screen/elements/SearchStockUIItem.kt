@@ -15,12 +15,12 @@ import com.example.investmentportfolio.ui.common_elements.BottomShadow
 import com.example.investmentportfolio.ui.theme.AppTheme
 
 @Composable
-fun SearchStockUIItem(name: String, price: Int, country: String, companyName: String) {
+fun SearchStockUIItem(id: Int, name: String, price: Float, country: String, companyName: String, onClick: (Int) -> Unit) {
     Column() {
         Row(
             modifier = Modifier
                 .padding(10.dp)
-                .clickable { }
+                .clickable(onClick = { onClick(id) })
         ) {
             Column(
                 Modifier.width(230.dp)
