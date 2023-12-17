@@ -86,13 +86,6 @@ fun SearchStocksScreen(
                         color = AppTheme.colors.mainGrey,
                         style = AppTheme.typography.bigTitle,
                         modifier = Modifier
-                            .clickable {
-                                navController.navigate(
-                                    SearchStocksFragmentDirections.actionSearchStocksFragmentToStockFragment(
-                                        1
-                                    )
-                                )
-                            }
                             .align(Alignment.Start)
                     )
                     Spacer(modifier = Modifier.height(26.dp))

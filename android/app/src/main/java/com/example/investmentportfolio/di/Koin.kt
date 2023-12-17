@@ -5,6 +5,8 @@ import com.example.investmentportfolio.data.PortfolioRepositoryImpl
 import com.example.investmentportfolio.data.network.ApiRepository
 import com.example.investmentportfolio.data.network.ApiRepositoryImpl
 import com.example.investmentportfolio.ui.history_screen.OperationsHistoryViewModel
+import com.example.investmentportfolio.ui.my_portfolios_screen.MyPortfoliosViewModel
+import com.example.investmentportfolio.ui.portfolio_screen.PortfolioViewModel
 import com.example.investmentportfolio.ui.search_screen.SearchStocksViewModel
 import com.example.investmentportfolio.ui.stock_screen.StockViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -25,6 +27,8 @@ val viewModelsModule = module {
     viewModel { OperationsHistoryViewModel(repository = get()) }
     viewModel { SearchStocksViewModel(repository = get()) }
     viewModel { StockViewModel(repository = get()) }
+    viewModel { MyPortfoliosViewModel(repository = get()) }
+    viewModel { PortfolioViewModel(repository = get()) }
 }
 
 val repositoryModule = module {

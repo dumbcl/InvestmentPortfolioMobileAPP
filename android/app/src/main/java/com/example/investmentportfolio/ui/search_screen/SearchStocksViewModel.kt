@@ -108,7 +108,7 @@ class SearchStocksViewModel(val repository: PortfolioRepository) : ViewModel() {
                     uiState.value.copy(
                         isLoading = false,
                         isError = false,
-                        isSearchEmpty = true,
+                        isSearchEmpty = false,
                         stocks = repository.getStocksInformation()
                     )
                 }

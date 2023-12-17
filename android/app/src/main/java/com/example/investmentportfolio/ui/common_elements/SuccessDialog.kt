@@ -39,7 +39,7 @@ fun SuccessDialog(message: String) {
         modifier = Modifier
             .width(363.dp)
             .height(182.dp)
-            .background(color = AppTheme.colors.supportGreen)
+            .background(color = AppTheme.colors.supportGreen, shape = RoundedCornerShape(size = 20.dp))
             .border(width = 1.dp, color = AppTheme.colors.mainGreen, shape = RoundedCornerShape(size = 20.dp)),
         contentAlignment = Alignment.Center
     ) {

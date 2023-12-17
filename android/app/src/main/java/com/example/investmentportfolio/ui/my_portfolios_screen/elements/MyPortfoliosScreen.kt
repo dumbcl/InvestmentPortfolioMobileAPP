@@ -19,6 +19,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -26,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import com.example.investmentportfolio.R
@@ -33,28 +38,49 @@ import com.example.investmentportfolio.data.PortfolioItem
 import com.example.investmentportfolio.ui.common_elements.BottomNavigationBar
 import com.example.investmentportfolio.ui.common_elements.BottomShadow
 import com.example.investmentportfolio.ui.common_elements.NavigationItem
+import com.example.investmentportfolio.ui.common_elements.SuccessDialog
 import com.example.investmentportfolio.ui.my_portfolios_screen.MyPortfoliosFragmentDirections
+import com.example.investmentportfolio.ui.my_portfolios_screen.MyPortfoliosScreenState
 import com.example.investmentportfolio.ui.theme.AppTheme
 
 val mockedPortfolios = listOf(
-    PortfolioItem("1", "Hello", "11 октября, 2023", 1223, 12),
-    PortfolioItem("1", "Hello", "11 октября, 2023", 1223, 12),
-    PortfolioItem("1", "Hello", "11 октября, 2023", 1223, 12)
+    PortfolioItem(1, "Hello", "11 октября, 2023", 1223f, 12f),
+    PortfolioItem(2, "Hello", "11 октября, 2023", 1223f, 12f),
+    PortfolioItem(3, "Hello", "11 октября, 2023", 1223f, 12f)
 )
 
 @Preview
 @Composable
 fun PreviewMyPortfoliosScreen() {
     AppTheme {
-        MyPortfoliosScreen(NavController(LocalContext.current))
+        MyPortfoliosScreen(
+            MyPortfoliosScreenState(false, false, false, false, listOf()),
+            NavController(LocalContext.current),
+            {},
+            {},
+            {},
+            {},
+            {}
+        )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MyPortfoliosScreen(navController: NavController) {
+fun MyPortfoliosScreen(
+    uiState: MyPortfoliosScreenState,
+    navController: NavController,
+    reload: () -> Unit,
+    showCreateDialog: () -> Unit,
+    discardCreateDialog: () -> Unit,
+    createPortfolio: (String) -> Unit,
+    navigateToPortfolio: (Int) -> Unit,
+) {
     val context = LocalContext.current
+
+
+
     Scaffold(
         bottomBar = { BottomNavigationBar(NavigationItem.MyPortfolios, navController) },
         content = {
@@ -71,10 +97,9 @@ fun MyPortfoliosScreen(navController: NavController) {
                         style = AppTheme.typography.largeTitle,
                         modifier = Modifier
                             .align(Alignment.TopStart)
-                            .clickable { navController.navigate(MyPortfoliosFragmentDirections.actionMyPortfoliosFragmentToPortfolioFragment()) }
                     )
                     TextButton(
-                        onClick = {},
+                        onClick = showCreateDialog,
                         modifier = Modifier
                             .width(188.dp)
                             .height(49.dp)
@@ -93,16 +118,32 @@ fun MyPortfoliosScreen(navController: NavController) {
                 }
                 Spacer(modifier = Modifier.height(49.dp))
                 LazyColumn {
-                    items(items = mockedPortfolios) { item ->
+                    items(items = uiState.portfolios) { item ->
                         PortfolioUIItem(
+                            id = item.id,
                             name = item.name,
                             creationDate = item.creationDate,
                             moneyNumber = item.moneyNumber,
-                            profitPercent = item.profitPercent
+                            profitPercent = item.profitPercent,
+                            onClick = navigateToPortfolio,
                         )
                     }
                 }
             }
         }
     )
+
+    if (uiState.isCreateDialogShown) {
+        Dialog(
+            onDismissRequest = discardCreateDialog,
+            content = { CreatePortfolioDialog(discard = discardCreateDialog, create = createPortfolio) }
+        )
+    }
+    
+    if (uiState.isSuccessDialogShown) {
+        Dialog(
+            onDismissRequest = {},
+            content = { SuccessDialog(message = "Портфель успешно создан!")}
+        )
+    }
 }

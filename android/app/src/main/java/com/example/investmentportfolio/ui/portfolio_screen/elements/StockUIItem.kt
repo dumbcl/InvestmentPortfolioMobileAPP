@@ -1,5 +1,6 @@
 package com.example.investmentportfolio.ui.portfolio_screen.elements
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,15 +11,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.investmentportfolio.data.StockItem
 import com.example.investmentportfolio.ui.common_elements.BottomShadow
 import com.example.investmentportfolio.ui.theme.AppTheme
 
 @Composable
-fun StockUIItem(name: String, price: Int, stockNumber: Int, profitPercent: Int) {
+fun StockUIItem(item: StockItem, name: String, price: Float, stockNumber: Int, profitPercent: Float, onClick: (StockItem) -> Unit) {
     Column {
         Row(
             modifier = Modifier
-                .padding(10.dp)
+                .padding(10.dp).clickable( onClick = { onClick(item) } )
         ) {
             Column(
                 Modifier.width(230.dp)

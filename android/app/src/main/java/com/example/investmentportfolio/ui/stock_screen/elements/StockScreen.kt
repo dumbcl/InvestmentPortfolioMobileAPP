@@ -17,6 +17,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -66,9 +67,9 @@ fun StockScreen(uiState: StockScreenState, navController: NavController) {
                     text = uiState.stock.name,
                     color = AppTheme.colors.mainGrey,
                     style = AppTheme.typography.bigTitle,
-                    modifier = Modifier.padding(10.dp, 0.dp)
+                    modifier = Modifier.padding(10.dp, 0.dp).align(Alignment.CenterHorizontally)
                 )
-                Spacer(modifier = Modifier.height(11.dp))
+                Spacer(modifier = Modifier.height(15.dp))
 
                 val prices = uiState.stock.price
                 val profit = prices.last() - prices[prices.size - 2]

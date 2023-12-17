@@ -62,6 +62,9 @@
             android:id="@+id/action_portfolioFragment_to_operationsHistoryFragment"
             app:destination="@id/operationsHistoryFragment"
             />
+        <argument
+            android:name="id"
+            app:argType="integer" />
     </fragment>
 
     <fragment

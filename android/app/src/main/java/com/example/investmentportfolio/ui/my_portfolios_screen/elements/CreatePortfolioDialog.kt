@@ -35,18 +35,21 @@ import com.example.investmentportfolio.ui.theme.AppTheme
 @Composable
 fun PreviewCreatePortfolioDialog() {
     AppTheme {
-        CreatePortfolioDialog()
+        CreatePortfolioDialog({}, {})
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreatePortfolioDialog() {
+fun CreatePortfolioDialog(
+    discard: () -> Unit,
+    create: (String) -> Unit
+) {
     Box(
         modifier = Modifier
             .width(359.dp)
             .height(182.dp)
-            .background(color = AppTheme.colors.supportGreen)
+            .background(color = AppTheme.colors.supportGreen, shape = RoundedCornerShape(size = 20.dp))
             .border(width = 1.dp, color = AppTheme.colors.mainGreen, shape = RoundedCornerShape(size = 20.dp)),
     contentAlignment = Alignment.Center
     ) {
@@ -81,7 +84,7 @@ fun CreatePortfolioDialog() {
             Spacer(modifier = Modifier.height(25.dp))
             Row() {
                 TextButton(
-                    onClick = {},
+                    onClick = discard,
                     modifier = Modifier
                         .width(131.dp)
                         .height(32.dp)
@@ -98,7 +101,7 @@ fun CreatePortfolioDialog() {
                 }
                 Spacer(modifier = Modifier.width(17.dp))
                 TextButton(
-                    onClick = {},
+                    onClick = { if (portfolioName != "") { create(portfolioName) } },
                     modifier = Modifier
                         .width(131.dp)
                         .height(32.dp)
