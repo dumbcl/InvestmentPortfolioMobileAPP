@@ -19,4 +19,5 @@ data class PortfolioScreenState (
     var isSuccessSellDialogShown: Boolean,
     var isDropDownShown: Boolean,
     var clickedStockToSell: StockItem?,
+    var lastChosenStock: SearchStockItem?,
 )

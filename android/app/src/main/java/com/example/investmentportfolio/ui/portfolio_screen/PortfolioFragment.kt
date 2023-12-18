@@ -51,6 +51,7 @@ class PortfolioFragment : Fragment() {
                             searchStock = viewModel::searchStocks,
                             showDropdown = viewModel::showDropDown,
                             discardDropdown = viewModel::discardDropDown,
+                            chooseStockFromMenu = viewModel::chooseStockFromDropDownMenu,
                         )
                     }
                 }

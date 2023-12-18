@@ -28,9 +28,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.Popup
 import androidx.navigation.NavController
 import com.example.investmentportfolio.R
 import com.example.investmentportfolio.data.PortfolioItem
+import com.example.investmentportfolio.data.SearchStockItem
 import com.example.investmentportfolio.data.StockItem
 import com.example.investmentportfolio.ui.common_elements.BottomNavigationBar
 import com.example.investmentportfolio.ui.common_elements.NavigationItem
@@ -54,6 +56,7 @@ fun PortfolioScreen(
     searchStock: (String) -> Unit,
     showDropdown: () -> Unit,
     discardDropdown: () -> Unit,
+    chooseStockFromMenu: (SearchStockItem) -> Unit,
 ) {
     val context = LocalContext.current
     Scaffold(
@@ -117,7 +120,7 @@ fun PortfolioScreen(
                     modifier = Modifier.padding(10.dp, 0.dp)
                 ) {
                     TextButton(
-                        onClick = {},
+                        onClick = showBuyDialog,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(35.dp)
@@ -169,7 +172,7 @@ fun PortfolioScreen(
                             price = item.price,
                             stockNumber = item.stockNumber,
                             profitPercent = item.profitPercent,
-                            sell = showSellDialog
+                            onClick = showSellDialog
                         )
                     }
                 }
@@ -194,7 +197,28 @@ fun PortfolioScreen(
     if (uiState.isSellDialogShown) {
         Dialog(
             onDismissRequest = discardSellDialog,
-            content = { StockSellDialog(stockItem = uiState.clickedStockToSell!!) }
+            content = { StockSellDialog(
+                stockItem = uiState.clickedStockToSell!!,
+                discard = discardSellDialog,
+                sell = sellStock
+            ) }
+        )
+    }
+
+    if (uiState.isBuyDialogShown) {
+        Dialog(
+            onDismissRequest = discardBuyDialog,
+            content = { StockBuyDialog(
+                showDropDown = showDropdown,
+                discardDropDown = discardDropdown,
+                isDropdownShown = uiState.isDropDownShown,
+                chooseStockFromMenu = chooseStockFromMenu,
+                lastChosenStock = uiState.lastChosenStock,
+                discard = discardBuyDialog,
+                search = searchStock,
+                buy = buyStock,
+                stocks = uiState.stocksInformation
+            ) }
         )
     }
 }

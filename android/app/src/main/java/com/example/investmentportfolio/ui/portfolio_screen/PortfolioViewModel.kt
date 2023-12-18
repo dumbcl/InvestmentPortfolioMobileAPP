@@ -34,7 +34,8 @@ class PortfolioViewModel(val repository: PortfolioRepository) : ViewModel() {
             isSuccessBuyDialogShown = false,
             isSuccessSellDialogShown = false,
             isDropDownShown = false,
-            clickedStockToSell = null
+            clickedStockToSell = null,
+            lastChosenStock = null,
         )
     )
 
@@ -299,17 +300,28 @@ class PortfolioViewModel(val repository: PortfolioRepository) : ViewModel() {
     }
 
     fun showDropDown() {
+        discardBuyStockDialog()
         _uiState.update {
             uiState.value.copy(
                 isDropDownShown = true
             )
         }
+        showBuyStockDialog()
     }
 
     fun discardDropDown() {
         _uiState.update {
             uiState.value.copy(
                 isDropDownShown = false
+            )
+        }
+    }
+
+    fun chooseStockFromDropDownMenu(stock: SearchStockItem) {
+        _uiState.update {
+            uiState.value.copy(
+                isDropDownShown = false,
+                lastChosenStock = stock
             )
         }
     }
