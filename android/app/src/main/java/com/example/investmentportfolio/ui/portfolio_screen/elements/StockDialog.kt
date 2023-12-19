@@ -53,7 +53,7 @@ fun StockBuyDialog(
     lastChosenStock: SearchStockItem?,
     discard: () -> Unit,
     search: (String) -> Unit,
-    buy: (Int, Int) -> Unit,
+    buy: (String, Int) -> Unit,
     stocks: List<SearchStockItem>
 ) {
     Box(
@@ -103,7 +103,9 @@ fun StockBuyDialog(
                 style = AppTheme.typography.regularBoldText
             )
             var stockName by remember { mutableStateOf("") }
-            if (lastChosenStock != null) stockName = lastChosenStock.name
+            if (lastChosenStock != null) {
+                stockName = lastChosenStock.name
+            }
             var price by remember { mutableStateOf("") }
             OutlinedTextField(
                 modifier = Modifier
@@ -153,7 +155,7 @@ fun StockBuyDialog(
                 OutlinedTextField(
                     modifier = Modifier
                         .width(103.dp),
-                    value = lastChosenStock?.price?.last()?.toString() ?: "",
+                    value = lastChosenStock?.price?.toString() ?: "",
                     onValueChange = { newPrice ->
                         price = newPrice
                     },
@@ -243,7 +245,7 @@ fun StockBuyDialog(
 fun StockSellDialog(
     stockItem: StockItem,
     discard: () -> Unit,
-    sell: (Int, Int) -> Unit,
+    sell: (Int) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -343,32 +345,32 @@ fun StockSellDialog(
             }
             Spacer(modifier = Modifier.height(15.dp))
             var number by remember { mutableStateOf("") }
-            Row(){
-                Text(
-                    text = context.resources.getString(R.string.number),
-                    color = AppTheme.colors.mainBrown,
-                    style = AppTheme.typography.regularBoldText
-                )
-                Spacer(modifier = Modifier.width(89.dp))
-                OutlinedTextField(
-                    modifier = Modifier
-                        .width(103.dp),
-                    value = number,
-                    onValueChange = { newNumber ->
-                        number = newNumber
-                    },
-                    textStyle = AppTheme.typography.smallText,
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        textColor = AppTheme.colors.mainGrey,
-                        containerColor = AppTheme.colors.white,
-                        unfocusedBorderColor = AppTheme.colors.mainGreen,
-                        focusedBorderColor = AppTheme.colors.mainGreen
-                    ),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    singleLine = true,
-                    shape = RoundedCornerShape(8.dp)
-                )
-            }
+//            Row(){
+//                Text(
+//                    text = context.resources.getString(R.string.number),
+//                    color = AppTheme.colors.mainBrown,
+//                    style = AppTheme.typography.regularBoldText
+//                )
+//                Spacer(modifier = Modifier.width(89.dp))
+//                OutlinedTextField(
+//                    modifier = Modifier
+//                        .width(103.dp),
+//                    value = number,
+//                    onValueChange = { newNumber ->
+//                        number = newNumber
+//                    },
+//                    textStyle = AppTheme.typography.smallText,
+//                    colors = TextFieldDefaults.outlinedTextFieldColors(
+//                        textColor = AppTheme.colors.mainGrey,
+//                        containerColor = AppTheme.colors.white,
+//                        unfocusedBorderColor = AppTheme.colors.mainGreen,
+//                        focusedBorderColor = AppTheme.colors.mainGreen
+//                    ),
+//                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+//                    singleLine = true,
+//                    shape = RoundedCornerShape(8.dp)
+//                )
+//            }
             Spacer(modifier = Modifier.height(26.dp))
             Row(){
                 TextButton(
@@ -390,10 +392,7 @@ fun StockSellDialog(
                 Spacer(modifier = Modifier.width(33.dp))
                 TextButton(
                     onClick = {
-                        if (number.isDigitsOnly() && number.toInt() <= stockItem.stockNumber) sell(
-                            stockItem.id,
-                            number.toInt()
-                        )
+                        sell(stockItem.id,)
                     },
                     modifier = Modifier
                         .width(131.dp)

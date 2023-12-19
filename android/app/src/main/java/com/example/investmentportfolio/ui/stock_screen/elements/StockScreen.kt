@@ -72,8 +72,8 @@ fun StockScreen(uiState: StockScreenState, navController: NavController) {
                 Spacer(modifier = Modifier.height(15.dp))
 
                 val prices = uiState.stock.price
-                val profit = prices.last() - prices[prices.size - 2]
-                val profitPercent = kotlin.math.abs(profit) / prices.last() * 100
+                //val profit = prices.last() - prices[prices.size - 2]
+                //val profitPercent = kotlin.math.abs(profit) / prices.last() * 100
 
 
                 Row(
@@ -82,13 +82,14 @@ fun StockScreen(uiState: StockScreenState, navController: NavController) {
                         .fillMaxWidth()
                 ) {
                     Text(
-                        text = uiState.stock.price.last().toString(),
+                        text = uiState.stock.price.toString(),
                         color = AppTheme.colors.mainGreen,
                         style = AppTheme.typography.largeBoldTitle,
                         modifier = Modifier.weight(2f)
                     )
                     Text(
-                        text = if (profit > 0) "+$profit" else "$profit",
+                        text = "profit",
+                        //text = if (profit > 0) "+$profit" else "$profit",
                         color = AppTheme.colors.supportGrey,
                         style = AppTheme.typography.mediumTitle,
                         modifier = Modifier
@@ -96,7 +97,8 @@ fun StockScreen(uiState: StockScreenState, navController: NavController) {
                             .weight(1f)
                     )
                     Text(
-                        text = if (profit > 0) "($profitPercent%)" else "(-$profitPercent%)",
+                        text = "profit%",
+                        //text = if (profit > 0) "($profitPercent%)" else "(-$profitPercent%)",
                         color = AppTheme.colors.mainGreen,
                         style = AppTheme.typography.mediumTitle,
                         modifier = Modifier
@@ -105,7 +107,7 @@ fun StockScreen(uiState: StockScreenState, navController: NavController) {
                     )
                 }
                 Spacer(modifier = Modifier.height(40.dp))
-                PriceChart(prices)
+                //PriceChart(prices)
                 Spacer(modifier = Modifier.height(30.dp))
                 Text(
                     text = "Описание",
@@ -130,7 +132,7 @@ fun StockScreen(uiState: StockScreenState, navController: NavController) {
                         )
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
-                            text = prices.last().toString(),
+                            text = prices.toString(),
                             color = AppTheme.colors.mainGreen,
                             style = AppTheme.typography.regularText,
                         )
@@ -145,7 +147,8 @@ fun StockScreen(uiState: StockScreenState, navController: NavController) {
                         )
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
-                            text = if (profit > 0) "+$profit" else "$profit",
+                            text = "change",
+                            //text = if (profit > 0) "+$profit" else "$profit",
                             color = AppTheme.colors.mainGreen,
                             style = AppTheme.typography.regularText,
                         )

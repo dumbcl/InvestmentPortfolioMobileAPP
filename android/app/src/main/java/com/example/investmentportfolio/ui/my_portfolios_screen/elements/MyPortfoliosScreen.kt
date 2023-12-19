@@ -37,24 +37,19 @@ import com.example.investmentportfolio.R
 import com.example.investmentportfolio.data.PortfolioItem
 import com.example.investmentportfolio.ui.common_elements.BottomNavigationBar
 import com.example.investmentportfolio.ui.common_elements.BottomShadow
+import com.example.investmentportfolio.ui.common_elements.LoadingStub
 import com.example.investmentportfolio.ui.common_elements.NavigationItem
 import com.example.investmentportfolio.ui.common_elements.SuccessDialog
 import com.example.investmentportfolio.ui.my_portfolios_screen.MyPortfoliosFragmentDirections
 import com.example.investmentportfolio.ui.my_portfolios_screen.MyPortfoliosScreenState
 import com.example.investmentportfolio.ui.theme.AppTheme
 
-val mockedPortfolios = listOf(
-    PortfolioItem(1, "Hello", "11 октября, 2023", 1223f, 12f),
-    PortfolioItem(2, "Hello", "11 октября, 2023", 1223f, 12f),
-    PortfolioItem(3, "Hello", "11 октября, 2023", 1223f, 12f)
-)
-
 @Preview
 @Composable
 fun PreviewMyPortfoliosScreen() {
     AppTheme {
         MyPortfoliosScreen(
-            MyPortfoliosScreenState(false, false, false, false, listOf()),
+            MyPortfoliosScreenState(false, false, false, false, listOf(), "Name"),
             NavController(LocalContext.current),
             {},
             {},
@@ -92,12 +87,13 @@ fun MyPortfoliosScreen(
                         .padding(8.dp, 23.dp, 10.dp, 0.dp)
                 ) {
                     Text(
-                        text = "Hi, Name",
+                        text = "Hi, ${uiState.name}",
                         color = AppTheme.colors.mainBrown,
                         style = AppTheme.typography.largeTitle,
                         modifier = Modifier
                             .align(Alignment.TopStart)
                     )
+
                     TextButton(
                         onClick = showCreateDialog,
                         modifier = Modifier
@@ -116,19 +112,26 @@ fun MyPortfoliosScreen(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(49.dp))
-                LazyColumn {
-                    items(items = uiState.portfolios) { item ->
-                        PortfolioUIItem(
-                            id = item.id,
-                            name = item.name,
-                            creationDate = item.creationDate,
-                            moneyNumber = item.moneyNumber,
-                            profitPercent = item.profitPercent,
-                            onClick = navigateToPortfolio,
-                        )
+
+                if (uiState.isLoading) {
+                    LoadingStub()
+                } else {
+                    Spacer(modifier = Modifier.height(49.dp))
+                    LazyColumn {
+                        items(items = uiState.portfolios) { item ->
+                            PortfolioUIItem(
+                                id = item.id,
+                                name = item.name,
+                                creationDate = item.creationDate,
+                                moneyNumber = item.moneyNumber,
+                                profitPercent = item.profitPercent,
+                                onClick = navigateToPortfolio,
+                            )
+                        }
                     }
                 }
+
+
             }
         }
     )

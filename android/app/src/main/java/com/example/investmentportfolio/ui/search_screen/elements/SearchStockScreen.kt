@@ -62,7 +62,7 @@ fun SearchStocksScreen(
     navController: NavController,
     reload: () -> Unit,
     search: (String) -> Unit,
-    navigateToStock: (Int) -> Unit,
+    navigateToStock: (String) -> Unit,
 ) {
     val context = LocalContext.current
     Scaffold(
@@ -123,7 +123,7 @@ fun SearchStocksScreen(
                                 SearchStockUIItem(
                                     id = item.id,
                                     name = item.name,
-                                    price = item.price.last(),
+                                    price = item.price,
                                     country = item.country,
                                     companyName = item.companyName,
                                     onClick = navigateToStock

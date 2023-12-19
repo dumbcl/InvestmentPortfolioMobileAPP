@@ -7,5 +7,6 @@ data class MyPortfoliosScreenState (
     var isError: Boolean,
     var isCreateDialogShown: Boolean,
     var isSuccessDialogShown: Boolean,
-    var portfolios: List<PortfolioItem>
+    var portfolios: List<PortfolioItem>,
+    var name: String,
 )

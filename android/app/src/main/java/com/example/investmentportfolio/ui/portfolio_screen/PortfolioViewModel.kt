@@ -15,10 +15,23 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+
+/**
+ * Viewmodel of Portfolio screen
+ *
+ * @property repository is the interface of interaction with data layer.
+ *
+ */
 class PortfolioViewModel(val repository: PortfolioRepository) : ViewModel() {
 
+    /**
+     * The variable containing id of current portfolio (changes in Fragment on create view method).
+     */
     var id = -1
 
+    /**
+     * Saving state.
+     */
     private val _uiState = MutableStateFlow(
         PortfolioScreenState(
             isLoadingPortfolio = true,
@@ -28,7 +41,7 @@ class PortfolioViewModel(val repository: PortfolioRepository) : ViewModel() {
             isStocksInformationError = false,
             stocks = listOf(),
             stocksInformation = listOf(),
-            portfolio = PortfolioItem(0, "a", "b", 1.0f, 2.0f),
+            portfolio = PortfolioItem(0, "a", "b", 1.0f, 2.0f, listOf()),
             isBuyDialogShown = false,
             isSellDialogShown = false,
             isSuccessBuyDialogShown = false,
@@ -41,9 +54,12 @@ class PortfolioViewModel(val repository: PortfolioRepository) : ViewModel() {
 
     val uiState = _uiState.asStateFlow()
 
+    /**
+     * Loading portfolio information from repository.
+     */
     fun init() {
         viewModelScope.launch {
-            repository.loadPortfolio(id).onStart {
+            repository.getPortfolio(id).onStart {
                 _uiState.update {
                     uiState.value.copy(
                         isLoadingPortfolio = true,
@@ -64,46 +80,9 @@ class PortfolioViewModel(val repository: PortfolioRepository) : ViewModel() {
                             uiState.value.copy(
                                 isLoadingPortfolio = false,
                                 isPortfolioError = false,
-                                portfolio = portfolio
+                                portfolio = portfolio,
+                                stocks = portfolio.stocks
                             )
-                        }
-
-                        repository.loadStocksInPortfolio(id).onStart {
-                            _uiState.update {
-                                uiState.value.copy(
-                                    isLoadingStocks = true,
-                                    isStocksError = false,
-                                )
-                            }
-                        }.catch {
-                            _uiState.update {
-                                uiState.value.copy(
-                                    isLoadingStocks = false,
-                                    isStocksError = true,
-                                )
-                            }
-                        }.collect {
-                            when (it) {
-                                is ApiResultState.OnSuccess<*> -> {
-                                    val stocks = it.data as List<StockItem>
-                                    _uiState.update {
-                                        uiState.value.copy(
-                                            isLoadingStocks = false,
-                                            isStocksError = false,
-                                            stocks = stocks
-                                        )
-                                    }
-                                }
-
-                                is ApiResultState.OnFailure -> {
-                                    _uiState.update {
-                                        uiState.value.copy(
-                                            isLoadingStocks = false,
-                                            isStocksError = true,
-                                        )
-                                    }
-                                }
-                            }
                         }
                     }
 
@@ -115,6 +94,7 @@ class PortfolioViewModel(val repository: PortfolioRepository) : ViewModel() {
                             )
                         }
                     }
+
                 }
             }
         }
@@ -187,7 +167,8 @@ class PortfolioViewModel(val repository: PortfolioRepository) : ViewModel() {
     fun discardBuyStockDialog() {
         _uiState.update {
             uiState.value.copy(
-                isBuyDialogShown = false
+                isBuyDialogShown = false,
+                lastChosenStock = null
             )
         }
     }
@@ -224,9 +205,9 @@ class PortfolioViewModel(val repository: PortfolioRepository) : ViewModel() {
         }
     }
 
-    fun buyStock(stockId: Int, number: Int) {
+    fun buyStock(stockId: String, number: Int) {
         viewModelScope.launch {
-            repository.buyStock(stockId, number).onStart {
+            repository.buyStock(stockId, number, id).onStart {
             }.catch {
                 discardBuyStockDialog()
             }.collect {
@@ -247,9 +228,9 @@ class PortfolioViewModel(val repository: PortfolioRepository) : ViewModel() {
         }
     }
 
-    fun sellStock(stockId: Int, number: Int) {
+    fun sellStock(stockId: Int) {
         viewModelScope.launch {
-            repository.sellStock(stockId, number).onStart {
+            repository.sellStock(stockId).onStart {
             }.catch {
                 discardSellStockDialog()
             }.collect {

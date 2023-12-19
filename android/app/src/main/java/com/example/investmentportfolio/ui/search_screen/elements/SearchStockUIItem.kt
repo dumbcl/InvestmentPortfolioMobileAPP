@@ -15,7 +15,7 @@ import com.example.investmentportfolio.ui.common_elements.BottomShadow
 import com.example.investmentportfolio.ui.theme.AppTheme
 
 @Composable
-fun SearchStockUIItem(id: Int, name: String, price: Float, country: String, companyName: String, onClick: (Int) -> Unit) {
+fun SearchStockUIItem(id: String, name: String, price: Float, country: String, companyName: String, onClick: (String) -> Unit) {
     Column() {
         Row(
             modifier = Modifier

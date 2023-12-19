@@ -32,34 +32,31 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.investmentportfolio.R
-import com.example.investmentportfolio.ui.common_elements.SuccessDialog
 import com.example.investmentportfolio.ui.theme.AppTheme
+import kotlin.math.log
 
-@Preview
-@Composable
-fun PreviewEnterForm() {
-    AppTheme {
-        EnterForm()
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EnterForm() {
+fun LoginForm(
+    toStartForm: () -> Unit,
+    loginClick: (String, String) -> Unit,
+    isLoginError: Boolean
+) {
     Box(
         modifier = Modifier.fillMaxSize().background(color = AppTheme.colors.white),
         contentAlignment = Alignment.Center,
     ){
         val context = LocalContext.current
         IconButton(
-            onClick = { /*TODO*/ },
+            onClick = toStartForm,
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(10.dp),
         ) {
             Icon(
                 Icons.Filled.KeyboardArrowLeft,
-                "sasa",
+                "to start form",
                 tint = AppTheme.colors.deepBlue,
                 modifier = Modifier
                     .width(48.dp)
@@ -137,7 +134,7 @@ fun EnterForm() {
 
             Spacer(modifier = Modifier.height(52.dp))
             TextButton(
-                onClick = {},
+                onClick = { loginClick(login, password) },
                 modifier = Modifier
                     .width(188.dp)
                     .height(49.dp)

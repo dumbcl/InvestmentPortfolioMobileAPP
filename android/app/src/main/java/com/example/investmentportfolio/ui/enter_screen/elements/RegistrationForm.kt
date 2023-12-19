@@ -34,24 +34,20 @@ import androidx.compose.ui.unit.dp
 import com.example.investmentportfolio.R
 import com.example.investmentportfolio.ui.theme.AppTheme
 
-@Preview
-@Composable
-fun PreviewRegistrationForm() {
-    AppTheme {
-        RegistrationForm()
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegistrationForm() {
+fun RegistrationForm(
+    toStartForm: () -> Unit,
+    register: (String, String, String, String) -> Unit,
+    isRegistrationError: Boolean,
+) {
     Box(
         modifier = Modifier.fillMaxSize().background(color = AppTheme.colors.white),
         contentAlignment = Alignment.Center
     ){
         val context = LocalContext.current
         IconButton(
-            onClick = { /*TODO*/ },
+            onClick = toStartForm,
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(10.dp),
@@ -188,7 +184,7 @@ fun RegistrationForm() {
 
             Spacer(modifier = Modifier.height(25.dp))
             TextButton(
-                onClick = {},
+                onClick = { register(email, emailRep, password, passwordRep) },
                 modifier = Modifier
                     .width(188.dp)
                     .height(49.dp)

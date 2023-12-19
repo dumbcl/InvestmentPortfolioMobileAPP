@@ -54,7 +54,7 @@ class SearchStocksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun navigateToStock(): (Int) -> Unit = { id ->
+    private fun navigateToStock(): (String) -> Unit = { id ->
         findNavController().navigate(SearchStocksFragmentDirections.actionSearchStocksFragmentToStockFragment(id))
     }
 

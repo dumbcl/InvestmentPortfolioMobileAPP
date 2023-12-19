@@ -13,13 +13,13 @@ class StockViewModel(val repository: PortfolioRepository) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
         StockScreenState(
-            stock = SearchStockItem(-1, "", listOf(), "", "")
+            stock = SearchStockItem("-1", "", 0f, "", "", "", "")
         )
     )
 
     val uiState = _uiState.asStateFlow()
 
-    fun init(id: Int) {
+    fun init(id: String) {
         viewModelScope.launch {
             val stock = repository.getStockInformation(id)
             _uiState.update {

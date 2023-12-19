@@ -23,14 +23,14 @@ class PortfolioFragment : Fragment() {
     private val args by navArgs<PortfolioFragmentArgs>()
     private val viewModel: PortfolioViewModel by viewModel()
 
-            override fun onCreateView(
+    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
         val navController = findNavController()
-        viewModel.init()
         viewModel.id = args.id
+        viewModel.init()
 
         return ComposeView(requireContext()).apply {
             setContent {

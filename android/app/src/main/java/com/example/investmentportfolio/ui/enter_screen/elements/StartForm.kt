@@ -23,12 +23,15 @@ import com.example.investmentportfolio.ui.theme.AppTheme
 @Composable
 fun PreviewStartForm() {
     AppTheme {
-        StartForm()
+        StartForm( {}, {} )
     }
 }
 
 @Composable
-fun StartForm() {
+fun StartForm(
+    toLoginForm: () -> Unit,
+    toRegistratonForm: () -> Unit,
+) {
     Box(
         modifier = Modifier.fillMaxSize().background(color = AppTheme.colors.white),
         contentAlignment = Alignment.Center
@@ -37,7 +40,7 @@ fun StartForm() {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             TextButton(
-                onClick = {},
+                onClick = toLoginForm,
                 modifier = Modifier
                     .width(188.dp)
                     .height(49.dp)
@@ -54,7 +57,7 @@ fun StartForm() {
                 )
             }
             TextButton(
-                onClick = {},
+                onClick = toRegistratonForm,
                 modifier = Modifier
                     .width(188.dp)
                     .height(49.dp)

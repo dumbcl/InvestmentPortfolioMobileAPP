@@ -26,13 +26,16 @@ class MyPortfoliosViewModel(val repository: PortfolioRepository): ViewModel() {
             isError = false,
             isCreateDialogShown = false,
             isSuccessDialogShown = false,
-            portfolios = listOf()
+            portfolios = listOf(),
+            name = "NAME"
         )
     )
 
     val uiState = _uiState.asStateFlow()
 
     fun init() {
+        setName()
+
         viewModelScope.launch {
             repository.loadPortfolios().onStart {
                 _uiState.update {
@@ -83,6 +86,17 @@ class MyPortfoliosViewModel(val repository: PortfolioRepository): ViewModel() {
                 }
             }
         }
+
+
+    }
+
+    fun setName(){
+        val name = repository.getName()
+        _uiState.update {
+            uiState.value.copy(
+                name = name
+            )
+        }
     }
 
     fun reload() {
@@ -127,7 +141,10 @@ class MyPortfoliosViewModel(val repository: PortfolioRepository): ViewModel() {
 
     fun createPortfolio(name: String) {
         viewModelScope.launch {
-            val newId = uiState.value.portfolios.last().id + 1
+            var newId = 1
+            if (uiState.value.portfolios.isNotEmpty()) {
+                newId = uiState.value.portfolios.last().id + 1
+            }
             repository.createPortfolio(newId, name).onStart {
             }.catch {
                 discardCreateDialog()
@@ -138,7 +155,7 @@ class MyPortfoliosViewModel(val repository: PortfolioRepository): ViewModel() {
                         showSuccessDialog()
                         delay(2000)
                         discardSuccessDialog()
-                        navigateToPortfolio(newId)
+                        reload()
                     }
 
                     is ApiResultState.OnFailure -> {
